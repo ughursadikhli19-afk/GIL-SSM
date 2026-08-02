@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>GIL · Классный журнал</title>
+<meta name="theme-color" content="#121f3d">
+
+<!-- PWA: манифест приложения -->
+<link rel="manifest" href="manifest.json">
+
+<!-- PWA: iOS/Safari — открывается как отдельное приложение с домашнего экрана -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GIL">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== LOGIN VIEW ===================== -->
+<div id="loginView" class="login-screen">
+  <div class="login-atmosphere"></div>
+  <div class="login-card">
+    <div class="login-mark">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+        <path d="M23 4 L42 13 L23 22 L4 13 Z" fill="#C9A227"/>
+        <path d="M12 18 V30 C12 34 17 38 23 38 C29 38 34 34 34 30 V18" stroke="#C9A227" stroke-width="2" fill="none"/>
+        <line x1="42" y1="13" x2="42" y2="27" stroke="#C9A227" stroke-width="2"/>
+      </svg>
+    </div>
+    <p class="login-eyebrow">GIL · Классный журнал</p>
+    <h1 class="login-title">С возвращением</h1>
+    <p class="login-sub">Войдите под своим логином, чтобы открыть журнал</p>
+
+    <form id="loginForm" class="login-form">
+      <label class="field">
+        <span>Логин</span>
+        <input type="text" id="loginInput" autocomplete="username" placeholder="например, admin" required>
+      </label>
+      <label class="field">
+        <span>Пароль</span>
+        <input type="password" id="passwordInput" autocomplete="current-password" placeholder="••••••••" required>
+      </label>
+      <p id="loginError" class="login-error"></p>
+      <button type="submit" class="btn btn-primary btn-block">Войти</button>
+    </form>
+<!-- 
+    <div class="login-hint">
+      <span class="dot"></span>
+      Первый вход администратора: <b>admin</b> / <b>admin2026</b>
+    </div> -->
+  </div>
+</div>
+
+<!-- ===================== APP SHELL ===================== -->
+<div id="appShell" class="app-shell hidden">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 46 46" fill="none">
+          <path d="M23 4 L42 13 L23 22 L4 13 Z" fill="#C9A227"/>
+          <path d="M12 18 V30 C12 34 17 38 23 38 C29 38 34 34 34 30 V18" stroke="#C9A227" stroke-width="2" fill="none"/>
+          <line x1="42" y1="13" x2="42" y2="27" stroke="#C9A227" stroke-width="2"/>
+        </svg>
+        <span>GIL</span>
+      </div>
+    </div>
+    <nav class="side-nav" id="sideNav"></nav>
+    <div class="sidebar-bottom">
+      <div class="mini-profile" id="miniProfile"></div>
+      <button id="logoutBtn" class="btn btn-ghost btn-block">Выйти</button>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <button class="burger" id="burgerBtn" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+      <h2 id="pageTitle">Обзор</h2>
+      <div class="topbar-right">
+        <span class="today-chip" id="todayChip"></span>
+      </div>
+    </header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+<script>
+  // PWA: регистрируем service worker, чтобы приложение работало офлайн и ставилось на экран Домой
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js").catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
